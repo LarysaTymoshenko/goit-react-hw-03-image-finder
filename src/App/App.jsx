@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
-import ImageGallery from "../ImageGallery";
-import Modal from "../Modal";
-import ScrollUp from "../ScrollUp";
-import Searchbar from "../Searchbar";
-import Section from "../Section";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import Modal from "../Modal/Modal";
+// import ScrollUp from "../ScrollUp";
+import Searchbar from "../Searchbar/Searchbar";
+// import Section from "../Section";
 // import s from  "./App.module.css";
 
 export default class App extends Component {
@@ -35,13 +35,9 @@ export default class App extends Component {
     const { imageName, showModal, modalImg } = this.state;
     return (
       <>
-        <Section>
-          <Searchbar onSubmit={this.onFormSubmit} />
-        </Section>
-        <Section>
-          <ImageGallery imageName={imageName} openModal={this.toggleModal} />
-          <ScrollUp />
-        </Section>
+        <Searchbar onSubmit={this.onFormSubmit} />
+
+        <ImageGallery imageName={imageName} openModal={this.toggleModal} />
 
         {showModal && <Modal onClose={this.toggleModal} modalImg={modalImg} />}
         <ToastContainer autoClose={3000} />
