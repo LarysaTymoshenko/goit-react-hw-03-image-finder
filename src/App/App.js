@@ -1,25 +1,51 @@
-import logo from "./logo.svg";
+import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import ImageGallery from "../ImageGallery";
+import Modal from "../Modal";
+import ScrollUp from "../ScrollUp";
+import Searchbar from "../Searchbar";
+import Section from "../Section";
 import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  state = {
+    imageName: "",
+    showModal: false,
+    modalImg: {
+      src: "",
+      alt: "",
+    },
+  };
 
-export default App;
+  onFormSubmit = (imageName) => {
+    this.setState({ imageName });
+  };
+
+  toggleModal = (src, alt) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      modalImg: {
+        src,
+        alt,
+      },
+    }));
+  };
+
+  render() {
+    const { imageName, showModal, modalImg } = this.state;
+    return (
+      <>
+        <Section>
+          <Searchbar onSubmit={this.onFormSubmit} />
+        </Section>
+        <Section>
+          <ImageGallery imageName={imageName} openModal={this.toggleModal} />
+          <ScrollUp />
+        </Section>
+
+        {showModal && <Modal onClose={this.toggleModal} modalImg={modalImg} />}
+        <ToastContainer autoClose={3000} />
+      </>
+    );
+  }
+}
