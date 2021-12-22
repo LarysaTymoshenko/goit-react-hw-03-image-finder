@@ -9,9 +9,8 @@ export default class Searchbar extends Component {
   };
 
   handleInput = (e) => {
-    const { imgName, value } = e.currentTarget;
     this.setState({
-      [imgName]: value,
+      imgName: e.currentTarget.value.toLowercase(),
     });
   };
   handleSubmit = (e) => {
@@ -25,13 +24,13 @@ export default class Searchbar extends Component {
   render() {
     return (
       <header class={s.searchbar}>
-        <form class="form">
-          <button type="submit" class={s.button}>
+        <form class={s.searchForm}>
+          <button type="submit" class={s.searchForm_button}>
             <FcSearch />
           </button>
 
           <input
-            class="input"
+            class={s.searchForm_input}
             type="text"
             autocomplete="off"
             autofocus
