@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const getImages = axios.create({
   baseURL: "https://pixabay.com/api/",
