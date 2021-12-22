@@ -13,9 +13,10 @@ const getImages = axios.create({
   },
 });
 
-export async function searchImages(name, page) {
+export async function searchImages(q = "", page = 1) {
+  const params = { q, page };
   try {
-    const { data } = await getImages("", { params: { q: name, page } });
+    const { data } = await getImages("", { params });
     return data;
   } catch (error) {
     toast.error(`Sorry, please enter the name again `);
