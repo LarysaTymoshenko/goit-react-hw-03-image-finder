@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FcSearch } from "react-icons/fc";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
+import Loader from "../Loader/Loader";
 import s from "./Searchbar.module.css";
 
 export default class Searchbar extends Component {
@@ -41,6 +42,7 @@ export default class Searchbar extends Component {
             onChange={this.handleInput}
           />
         </form>
+        <Loader />
       </header>
     );
   }
