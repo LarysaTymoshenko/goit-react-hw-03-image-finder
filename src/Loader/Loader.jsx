@@ -9,7 +9,7 @@ const Loader = (props) => (
         viewBox="0 0 400 160"
         height={160}
         width={400}
-        backgroundColor="aqua"
+        backgroundColor="blue"
         {...props}
       >
         <circle cx="150" cy="86" r="8" />
