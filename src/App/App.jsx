@@ -5,7 +5,7 @@ import Modal from "../Modal";
 import ScrollUp from "../ScrollUp";
 import Searchbar from "../Searchbar";
 import Section from "../Section";
-import "./App.css";
+// import s from  "./App.module.css";
 
 export default class App extends Component {
   state = {

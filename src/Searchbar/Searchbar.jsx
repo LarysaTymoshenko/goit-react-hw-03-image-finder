@@ -3,7 +3,7 @@ import { FcSearch } from "react-icons/fc";
 import PropTypes from "prop-types";
 import s from "./Searchbar.module.css";
 
-export default class Saerchbar extends Component {
+export default class Searchbar extends Component {
   state = {
     imgName: "",
   };
@@ -43,7 +43,7 @@ export default class Saerchbar extends Component {
   }
 }
 
-Saerchbar.protoType = {
+Searchbar.protoType = {
   imgName: PropTypes.string.isRequired,
   onAddContact: PropTypes.func.isRequired,
 };
