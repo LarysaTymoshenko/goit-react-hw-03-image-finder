@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FcSearch } from "react-icons/fc";
+import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 import s from "./Searchbar.module.css";
 
@@ -10,31 +11,34 @@ export default class Searchbar extends Component {
 
   handleInput = (e) => {
     this.setState({
-      imgName: e.currentTarget.value.toLowercase(),
+      imgName: e.currentTarget.value.toLowerCase(),
     });
   };
   handleSubmit = (e) => {
     e.preventDefault();
+    if (this.state.imgName.trim() === "") {
+      toast("Enter please request");
+      return;
+    }
     this.props.onSubmit(this.state.imgName);
-    this.reset();
-  };
-  reset = () => {
     this.setState({ imgName: "" });
   };
   render() {
     return (
-      <header class={s.searchbar}>
-        <form class={s.searchForm}>
-          <button type="submit" class={s.searchForm_button}>
+      <header className={s.searchbar}>
+        <form onSubmit={this.handleSubmit} className={s.searchForm}>
+          <button type="submit" className={s.searchForm_button}>
             <FcSearch />
           </button>
 
           <input
-            class={s.searchForm_input}
+            className={s.search_input}
             type="text"
-            autocomplete="off"
-            autofocus
+            autoComplete="off"
+            autoFocus
             placeholder="Search images and photos"
+            value={this.state.imgName}
+            onChange={this.handleInput}
           />
         </form>
       </header>

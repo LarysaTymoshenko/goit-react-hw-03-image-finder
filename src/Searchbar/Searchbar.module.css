@@ -45,7 +45,7 @@
   opacity: 1;
 }
 
-.searchForm-button-label {
+/* .searchForm-button-label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -55,9 +55,9 @@
   white-space: nowrap;
   clip-path: inset(50%);
   border: 0;
-}
+} */
 
-.searchForm_input {
+.search_input {
   display: inline-block;
   width: 100%;
   font: inherit;
@@ -68,7 +68,7 @@
   padding-right: 4px;
 }
 
-.searchForm-input::placeholder {
+.search-input::placeholder {
   font: inherit;
   font-size: 18px;
 }
