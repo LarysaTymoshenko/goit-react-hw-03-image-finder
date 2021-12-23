@@ -7,35 +7,32 @@ const root = document.querySelector("#root-modal");
 
 export default class Modal extends Component {
   componentDidMount() {
-    window.addEventListener("keydown", this.onCloseKey);
+    document.body.appendChild(root);
+    window.addEventListener("keydown", this.closeKeyDown);
+    document.body.style.overflow = "hidden";
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.onCloseKey);
+    window.removeEventListener("keydown", this.closeKeyDown);
+    document.body.style.overflow = "scroll";
   }
-
-  onCloseKey = (e) => {
-    if (e.code === "Escape") {
-      this.props.onCloseModal();
+  closeKeyDown = (el) => {
+    if (el.code === "Escape") {
+      this.props.onClose();
+    }
+  };
+  closeBackDrop = (el) => {
+    if (el.target === el.currentTarget) {
+      this.props.onClose();
     }
   };
 
   render() {
-    const {
-      onCloseModal,
-      item: { src, tags },
-    } = this.props;
+    const { openImgModal, alt } = this.props;
     return createPortal(
-      <div
-        className={s.overlay}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            onCloseModal();
-          }
-        }}
-      >
+      <div className={s.overlay} onClick={this.closeBackDrop}>
         <div className={s.modal}>
-          <img src={src} alt={tags} />
+          <img className={s.modal__image} src={openImgModal} alt={alt} />
         </div>
       </div>,
       root
@@ -46,7 +43,7 @@ export default class Modal extends Component {
 Modal.propTypes = {
   item: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
   }),
-  onCloseModal: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

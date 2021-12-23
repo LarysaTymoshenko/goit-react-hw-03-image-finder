@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import ImageGallery from "../ImageGallery/ImageGallery";
 // import Modal from "../Modal/Modal";
-import Button from "../Button/Button";
+// import Button from "../Button/Button";
 import Searchbar from "../Searchbar/Searchbar";
 // import Section from "../Section";
 //  import s from  "./App.module.css";
@@ -10,11 +10,6 @@ import Searchbar from "../Searchbar/Searchbar";
 export default class App extends Component {
   state = {
     imgName: "",
-    showModal: false,
-    modalImg: {
-      src: "",
-      alt: "",
-    },
   };
 
   onFormSubmit = (imgName) => {
@@ -32,15 +27,11 @@ export default class App extends Component {
   };
 
   render() {
-    const { imgName, showModal, modalImg } = this.state;
+    const { imgName } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.onFormSubmit} />
-        <Button />
         <ImageGallery imgName={imgName} />
-        {/* <ImageGallery imgName={imgName} openModal={this.toggleModal} />
-
-        {showModal && <Modal onClose={this.toggleModal} modalImg={modalImg} />} */}
         <ToastContainer autoClose={3000} />
       </>
     );
