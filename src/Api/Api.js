@@ -7,7 +7,7 @@ const getImages = axios.create({
   timeout: 1000,
 
   params: {
-    key: "24038047-704cc7956da07111e29f822f6b",
+    key: "23933594-99c5d6abfa76120a4e36d3057",
     per_page: 12,
     image_type: "photo",
     orientation: "horizontal",

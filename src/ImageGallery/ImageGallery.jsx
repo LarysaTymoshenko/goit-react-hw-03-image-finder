@@ -17,11 +17,12 @@ class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { page } = this.state;
-    const { imgName } = this.props;
+    const page = this.state;
+    const imgName = this.props;
     const prevName = prevProps.imgName;
+    const prevPage = prevState.page;
 
-    if (prevName !== imgName) {
+    if (prevName !== imgName || prevPage !== page) {
       this.setState({ loading: true });
       searchImages(prevName, page)
         .then((imgArr) =>
