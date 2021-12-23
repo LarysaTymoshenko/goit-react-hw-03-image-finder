@@ -17,6 +17,7 @@ export default class Searchbar extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
+
     if (this.state.imgName.trim() === "") {
       toast("Enter please request");
       return;
