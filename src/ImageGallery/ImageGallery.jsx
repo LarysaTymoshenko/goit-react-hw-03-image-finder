@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Loader from "../Loader/Loader";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
@@ -18,16 +18,15 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
-    // const key = "23933594-99c5d6abfa76120a4e36d3057";
     const { imgName } = this.props;
     const prevName = prevProps.imgName;
 
-    if (prevName !== imgName || prevState.page !== page) {
+    if (prevName !== imgName) {
       this.setState({ loading: true });
       searchImages(prevName, page)
         .then((imgArr) =>
           this.setState({
-            imgArr: [...this.state.imgArr, ...imgArr.hits],
+            imgArr: [...this.state.imgArr, ...imgArr.hits.previewURL],
           })
         )
         .finally(() => this.setState({ loading: false }));
@@ -81,12 +80,6 @@ class ImageGallery extends Component {
     const { imgArr, isOpen, largeImageURL, loading } = this.state;
     return (
       <>
-        {/* {this.state.loading&&<Loader/>}
-        <ul className={s.gallery}>
-          {this.props.imgName && <ImageGalleryItem/>}
-         
-        </ul> */}
-
         <div>
           {imgArr.length > 0 && (
             <ul className={s.gallery}>
@@ -119,15 +112,15 @@ class ImageGallery extends Component {
 }
 export default ImageGallery;
 
-ImageGallery.propTypes = {
-  itemsImg: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      webformatURL: PropTypes.string.isRequired,
-      largeImageURL: PropTypes.string.isRequired,
-      tags: PropTypes.string.isRequired,
-    })
-  ),
-  myRef: PropTypes.object,
-  // onClickImg: PropTypes.func.isRequired,
-};
+// ImageGallery.propTypes = {
+//   imgArr: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       webformatURL: PropTypes.string.isRequired,
+//       largeImageURL: PropTypes.string.isRequired,
+//       tags: PropTypes.string.isRequired,
+//     })
+//   ),
+//   myRef: PropTypes.object,
+//   // onClickImg: PropTypes.func.isRequired,
+// };
