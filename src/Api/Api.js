@@ -14,8 +14,8 @@ const getImages = axios.create({
   },
 });
 
-export async function searchImages(imgName, page = 1) {
-  const params = { q: imgName, page };
+export async function searchImages(name, page = 1) {
+  const params = { q: name, page };
   try {
     const { data } = await getImages("", { params });
     return data;

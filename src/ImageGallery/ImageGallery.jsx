@@ -18,9 +18,9 @@ class ImageGallery extends Component {
   state = {
     imgArr: [],
     page: 1,
-    loading: false,
     isOpen: false,
     largeImageURL: null,
+    status: Status.IDLE,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,17 +29,18 @@ class ImageGallery extends Component {
     const prevName = prevProps.imgName;
     const prevPage = prevState.page;
 
-    if (prevName !== imgName) {
-      this.setState({ imgArr: [] });
-    }
+    // if (prevName !== imgName) {
+    //   this.setState({ imgArr: [] });
+    // }
 
     if (prevName !== imgName || prevPage !== page) {
-      this.setState({ loading: true });
+      this.setState({ status: Status.PENDING });
 
       searchImages(prevName, page)
         .then((imgArr) =>
           this.setState({
             imgArr: [...this.state.imgArr, ...imgArr.hits],
+            status: Status.RESOLVED,
           })
         )
         .finally(() => this.setState({ status: Status.IDLE }));
@@ -47,10 +48,6 @@ class ImageGallery extends Component {
     if (prevName !== imgName) {
       this.clearOnNewRequest();
     }
-    // setTimeout(() => {
-    //   fetch(`https://pixabay.com/api/?key=24038047-704cc7956da07111e29f822f6&page=1&q=${imgName}&image_type=photo&orientation=horizontal&per_page=12`).then((res) => res.json()).then((imgArr) => this.setState({ imgArr })).finally(() => this.setState({ loading: false }));
-    // }, 1000
-    // )
   }
 
   clearOnNewRequest = () => {
@@ -90,7 +87,7 @@ class ImageGallery extends Component {
   };
 
   render() {
-    const { imgArr, isOpen, largeImageURL, loading } = this.state;
+    const { imgArr, isOpen, largeImageURL, status } = this.state;
     return (
       <>
         <div>
@@ -108,10 +105,10 @@ class ImageGallery extends Component {
           )}
         </div>
 
-        {imgArr.length > 0 && !loading && (
+        {imgArr.length > 0 && status === "idle" && (
           <Button nextPage={this.buttonOnclickNextPage} />
         )}
-        {loading && <Loader />}
+        {status === "pending" && <Loader />}
 
         {isOpen && (
           <Modal

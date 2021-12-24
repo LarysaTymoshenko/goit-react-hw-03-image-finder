@@ -1,6 +1,9 @@
 .gallery {
-  display: block;
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: auto auto auto auto;
+  grid-auto-flow: dense;
+  grid-gap: 15px;
+  padding: 0;
+  list-style: none;
 }

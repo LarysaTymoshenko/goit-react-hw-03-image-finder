@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import s from "./Modal.module.css";
 
-const root = document.querySelector("#root-modal");
+const root = document.createElement("div");
 
 export default class Modal extends Component {
   componentDidMount() {
@@ -32,6 +32,9 @@ export default class Modal extends Component {
     return createPortal(
       <div className={s.overlay} onClick={this.closeBackDrop}>
         <div className={s.modal}>
+          <button className={s.button} onClick={this.closeBackDrop}>
+            Close
+          </button>
           <img className={s.modal__image} src={openImgModal} alt={alt} />
         </div>
       </div>,
