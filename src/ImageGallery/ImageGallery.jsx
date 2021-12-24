@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
@@ -35,7 +37,6 @@ class ImageGallery extends Component {
 
     if (prevName !== imgName || prevPage !== page) {
       this.setState({ status: Status.PENDING });
-
       searchImages(prevName, page)
         .then((imgArr) =>
           this.setState({
@@ -48,18 +49,22 @@ class ImageGallery extends Component {
     if (prevName !== imgName) {
       this.clearOnNewRequest();
     }
+
+    if (page === 1) {
+      toast.success(`Found ${this.state.imgArr.length} images`);
+    }
   }
 
   clearOnNewRequest = () => {
     this.setState({
       page: 1,
       imgArr: [],
+      status: Status.IDLE,
     });
   };
   buttonOnclickNextPage = () => {
     const { page } = this.state;
     this.setState({ page: page + 1 });
-
     this.scrollTop();
   };
 
@@ -82,7 +87,7 @@ class ImageGallery extends Component {
           behavior: "smooth",
           block: "end",
         }),
-      1000
+      500
     );
   };
 
@@ -122,15 +127,13 @@ class ImageGallery extends Component {
 }
 export default ImageGallery;
 
-// ImageGallery.propTypes = {
-//   imgArr: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       webformatURL: PropTypes.string.isRequired,
-//       largeImageURL: PropTypes.string.isRequired,
-//       tags: PropTypes.string.isRequired,
-//     })
-//   ),
-//   myRef: PropTypes.object,
-//   // onClickImg: PropTypes.func.isRequired,
-// };
+ImageGallery.propTypes = {
+  imgArr: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    })
+  ),
+};
