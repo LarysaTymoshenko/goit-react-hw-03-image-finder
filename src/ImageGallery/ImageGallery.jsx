@@ -18,38 +18,47 @@ class ImageGallery extends Component {
   state = {
     imgArr: [],
     page: 1,
+    loading: false,
     isOpen: false,
     largeImageURL: null,
-    status: Status.IDLE,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const page = this.state;
-    const imgName = this.props;
+    const { page } = this.state;
+    const { imgName } = this.props;
     const prevName = prevProps.imgName;
     const prevPage = prevState.page;
 
-    // if (prevName !== imgName) {
-    //   this.setState({ imgArr: [] });
-    // }
+    if (prevName !== imgName) {
+      this.setState({ imgArr: [] });
+    }
 
     if (prevName !== imgName || prevPage !== page) {
-      this.setState({ status: Status.PENDING });
+      this.setState({ loading: true });
 
-      searchImages(imgName, page)
+      searchImages(prevName, page)
         .then((imgArr) =>
           this.setState({
             imgArr: [...this.state.imgArr, ...imgArr.hits],
-            status: Status.RESOLVED,
           })
         )
         .finally(() => this.setState({ status: Status.IDLE }));
+    }
+    if (prevName !== imgName) {
+      this.clearOnNewRequest();
     }
     // setTimeout(() => {
     //   fetch(`https://pixabay.com/api/?key=24038047-704cc7956da07111e29f822f6&page=1&q=${imgName}&image_type=photo&orientation=horizontal&per_page=12`).then((res) => res.json()).then((imgArr) => this.setState({ imgArr })).finally(() => this.setState({ loading: false }));
     // }, 1000
     // )
   }
+
+  clearOnNewRequest = () => {
+    this.setState({
+      page: 1,
+      imgArr: [],
+    });
+  };
   buttonOnclickNextPage = () => {
     const { page } = this.state;
     this.setState({ page: page + 1 });
@@ -81,7 +90,7 @@ class ImageGallery extends Component {
   };
 
   render() {
-    const { imgArr, isOpen, largeImageURL, status } = this.state;
+    const { imgArr, isOpen, largeImageURL, loading } = this.state;
     return (
       <>
         <div>
@@ -99,10 +108,10 @@ class ImageGallery extends Component {
           )}
         </div>
 
-        {imgArr.length > 0 && status === "resolved" && (
+        {imgArr.length > 0 && !loading && (
           <Button nextPage={this.buttonOnclickNextPage} />
         )}
-        {status === "pending" && <Loader />}
+        {loading && <Loader />}
 
         {isOpen && (
           <Modal

@@ -22,7 +22,7 @@ export default class App extends Component {
       <>
         <Searchbar onSubmit={this.onFormSubmit} />
 
-        <ImageGallery imgName={[imgName]} />
+        <ImageGallery imgName={imgName} />
 
         <ToastContainer autoClose={3000} />
       </>
