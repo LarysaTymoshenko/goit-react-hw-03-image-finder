@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
-import { searchImages } from "../Api/Api";
+import { searchImages } from "../api/api";
 import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 import s from "./ImageGallery.module.css";
 
@@ -31,12 +31,13 @@ class ImageGallery extends Component {
     const prevName = prevProps.imgName;
     const prevPage = prevState.page;
 
-    // if (prevName !== imgName) {
-    //   this.setState({ imgArr: [] });
-    // }
+    if (prevName !== imgName) {
+      this.setState({ imgArr: [] });
+    }
 
     if (prevName !== imgName || prevPage !== page) {
       this.setState({ status: Status.PENDING });
+
       searchImages(prevName, page)
         .then((imgArr) =>
           this.setState({
@@ -50,9 +51,10 @@ class ImageGallery extends Component {
       this.clearOnNewRequest();
     }
 
-    if (page === 1) {
-      toast.success(`Found ${this.state.imgArr.length} images`);
-    }
+    // if (page === 1) {
+    //   const total = {totalHits}
+    //   toast.success(`Found ${imgName.length} images`);
+    // }
   }
 
   clearOnNewRequest = () => {
